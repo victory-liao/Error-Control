@@ -13,9 +13,9 @@ def XOR(str1, str2):
     """
     ans = ''
 
-    if str1[0] == '0':
+    if str1[0] == '0':  # 首位是0表示不够除，从原始数据往下挪数据，因此返回str1[1:]即可
         return '0', str1[1:]
-    else:
+    else:  # 够除的话进行异或操作求异或结果
         for i in range(len(str1)):
             if str1[i] == '0' and str2[i] == '0':
                 ans = ans + '0'
@@ -23,16 +23,10 @@ def XOR(str1, str2):
                 ans = ans + '0'
             else:
                 ans = ans + '1'
-    return '1', ans[1:]
+    return '1', ans[1:]  # 异或结果返回ans[1:]的原因是数据开头的零没有用因此第一位一定都为1，因此第一位异或结果为0，不需要返回
 
 
 def CRC_Encoding(str1, str2):
-    """
-    CRC编码
-    :param str1: 原始数据
-    :param str2: 生成多项式
-    :return: 最终发送数据
-    """
     # 求生成多项式的长度
     length = len(str2)
     # 给原始数据（被除数）补0
@@ -46,13 +40,15 @@ def CRC_Encoding(str1, str2):
 
     # 求余数
     for i in range(len(str1)):
+        print(f"=============i={i}=========================")
         str4, yus = XOR(yus, str2)  # 异或
-        print(str4, yus)  # 1 1001
-        ans = ans + str4  # ans = 1
-        if i == len(str1) - 1:
+        print(str4, yus)
+        ans = ans + str4
+        print("ans:", ans)
+        if i == len(str1) - 1:  # 到len(str1)-1就除完了
             break
         else:
-            yus = yus + str3[i + length]  # yus = 1001 + 1
+            yus = yus + str3[i + length]
             print(yus)
 
     # 将原始数据与余数拼接
