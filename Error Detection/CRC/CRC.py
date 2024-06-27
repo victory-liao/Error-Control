@@ -33,30 +33,47 @@ def CRC_Encoding(str1, str2):
     :param str2: 生成多项式
     :return: 最终发送数据
     """
+    # 求生成多项式的长度
     length = len(str2)
+    # 给原始数据（被除数）补0
     str3 = str1 + '0' * (length - 1)
+    print(str3)
+    # 存放CRC编码
     ans = ''
+    # 存放计算过程的余数
     yus = str3[0:length]
+    print(yus)
 
+    # 求余数
     for i in range(len(str1)):
-        str4, yus = XOR(yus, str2)
-        ans = ans + str4
+        str4, yus = XOR(yus, str2)  # 异或
+        print(str4, yus)  # 1 1001
+        ans = ans + str4  # ans = 1
         if i == len(str1) - 1:
             break
         else:
-            yus = yus + str3[i + length]
+            yus = yus + str3[i + length]  # yus = 1001 + 1
+            print(yus)
 
+    # 将原始数据与余数拼接
     ans = str1 + yus
 
+    # 返回CRC编码
     return ans
 
 
 # CRC解码
 def CRC_Decoding(str1, str2):
+    # 求生成多项式的长度
     length = len(str2)
+    # 给原始数据序列补0
     str3 = str1 + '0' * (length - 1)
+    # 存放结果
     ans = ''
+    # 存放计算过程中的余数
     yus = str3[0:length]
+
+    # 求余数
     for i in range(len(str1)):
         str4, yus = XOR(yus, str2)
         ans = ans + str4
@@ -64,6 +81,8 @@ def CRC_Decoding(str1, str2):
             break
         else:
             yus = yus + str3[i + length]
+
+    # 余数为0，表示数据正确
     return yus == '0' * len(yus)
 
 
