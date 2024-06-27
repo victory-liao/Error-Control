@@ -1,3 +1,9 @@
+"""
+author: victory liao
+date: 2024-06-27
+"""
+
+
 class ParityCheck:
     """奇偶校验"""
 
